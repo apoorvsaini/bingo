@@ -1,6 +1,7 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let routes = require('./routes/routes');
+let connection = require('./config/server');
 let app = express();
 
 app.use(bodyParser.json());

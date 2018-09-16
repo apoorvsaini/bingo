@@ -1,4 +1,5 @@
 let response = require('../constants/response');
+let auth = require('../src/auth');
 
 let appRouter = function (app) {
     
@@ -11,7 +12,10 @@ let appRouter = function (app) {
      * Endpoint for generating userId
     */
     app.get("/auth/", function (req, res) {
-        res.status(response.OK_STATUS).send("Welcome to our restful API");
+        let data = ({
+            user_id: auth()
+        });
+        res.status(response.OK_STATUS).send(data);
     });
 
 
