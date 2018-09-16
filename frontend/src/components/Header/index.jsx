@@ -15,23 +15,27 @@ class Header extends React.Component {
         super(props);
     }
 
-    connectToSocket() {
-        if (this.props.userId !== null && this.props.connected === false) {
-            this.socket.emit('connected', { 'user_id': this.props.userId });
-            this.props.setConnected(true);
-        }
-    }
-
     componentDidMount() {
         let _t = this;
+        this.socket = io.connect(api.API_URL);
+        
         this.socket.on('ball', function (data) {
             console.log(data);
             _t.props.setNewBall(data);
         });
+
+        this.checkConnection();
+    }
+
+    checkConnection() {
+        if(!this.socket.connected) {
+            console.log('reconnecting...');
+            this.socket = io.connect(api.API_URL);
+        }
     }
 
     componentDidUpdate() {
-        //this.connectToSocket();
+        this.checkConnection();
     }
 
     render() {
@@ -39,7 +43,7 @@ class Header extends React.Component {
             <div className = 'header'>
                 <div className = 'ball_ticker_area'>
                     {this.props.ballsDrawn.map(data => (
-                        <span key = {'ball-' + data.time}> {data.ball} </span>
+                        <span className = 'balls' key = {'ball-' + data.time}> {data.ball} </span>
                     ))}
                 </div>
             </div>

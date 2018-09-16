@@ -20,10 +20,7 @@ const bingo = (state =
         }
 
         case 'NEW_NUMBER_LOADED': {
-            let newState = state.ballsDrawn;
-            console.log(([action.payload, ...state.ballsDrawn]).slice(0, 4));
-
-            return { ...state, ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 4) };
+            return { ...state, ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6) };
         }
 
         default: return state;

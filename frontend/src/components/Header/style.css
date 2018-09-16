@@ -16,3 +16,8 @@
     background: #ffffff;
     margin: 0px auto !important;
 }
+
+.balls {
+    float: left;
+    margin-left: 10px;
+}
