@@ -15,7 +15,6 @@ class BingoContainer extends React.Component {
     // Make API call to generate the tickets data
     generateTickets() {
         let _t = this;
-        console.log('sds');
 
         ticketGen().then(function(data) {
             _t.props.setTicketsData(data);
@@ -33,16 +32,20 @@ class BingoContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props.ticketsData);
-        return (
-            <div className = 'bingo_container'>
-                {Object.keys(this.props.ticketsData).map(id => (
-                    <div className = 'ticket_area' key = {id} id = {id}>
-                        <Ticket id = {id} loading = {this.props.loading} data = {(id in this.props.ticketsData) ? this.props.ticketsData[id] : null}/>
-                    </div>
-                ))}
-            </div>
-        );
+        if(Object.keys(this.props.ticketsData).length === 0) {
+            return (<div className = 'home'> ERROR! </div>);
+        }
+        else {
+            return (
+                <div className = 'bingo_container'>
+                    {Object.keys(this.props.ticketsData).map(id => (
+                        <div className = 'ticket_area' key = {id} id = {id}>
+                            <Ticket id = {id} loading = {this.props.loading} data = {(id in this.props.ticketsData) ? this.props.ticketsData[id] : null}/>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
     }
 
 }

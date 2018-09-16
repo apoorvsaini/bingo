@@ -35,12 +35,13 @@ const bingo = (state =
                     if (tickets.indexOf(action.payload.ball) !== -1) {
                         if (!(i in newMarkers))
                             newMarkers[i] = new Array();
-                        
-                        newMarkers[i].push(action.payload.ball);
+                        if (newMarkers[i].indexOf(action.payload.ball) === -1)
+                            newMarkers[i].push(action.payload.ball);
     
                         if (newMarkers[i].length === 25) {
                             newBingoStatus = true;
                             newBingoTickets.push(i);
+                            alert('Bingo!');
                         }
                     }
                 }
