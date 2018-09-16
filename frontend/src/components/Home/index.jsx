@@ -52,7 +52,7 @@ class Home extends React.Component {
 
         return (
           <div className = 'home'>
-            <Header />
+            <Header userId = {this.props.userId} />
             { this.homeDom }
           </div>
         );

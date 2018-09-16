@@ -31,9 +31,8 @@ let io = require('socket.io')(server);
  * SocketIO implementation
 */
 io.on('connection', function (socket) {
-    socket.emit('ball', { data: 1 });
-    console.log('new player connected');
     socket.on('connected', function (data) {
+        console.log('new player connected');
         console.log(data);
     });
 });
