@@ -13,13 +13,16 @@ const balls = require('../store/balls');
 let counter = 0;
 let allBalls = [];
 
-for (let i = 1; i <= 100; i++)
+/*
+  Generate the numbers and keep shuffling them in each cycle
+*/
+for (let i = 1; i <= serviceConstants.MAX_BALLS; i++)
     allBalls.push(i);
 
 shuffle(allBalls);
 
 module.exports = function(io) {
-    if (counter === 99) {
+    if (counter === serviceConstants.MAX_BALLS - 1) {
         shuffle(allBalls);
         counter = 0;
         console.log('ran out of numbers');

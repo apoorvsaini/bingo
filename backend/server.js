@@ -34,9 +34,9 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         userConnected -= 1;
-        console.log('user disconnected ' + userConnected);
+        
         if (userConnected === 0) {
-            console.log('game stopped')
+            console.log('game stopped');
             clearInterval(timerId);
             timerId = false;
         }
