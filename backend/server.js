@@ -2,6 +2,8 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let routes = require('./routes/routes');
 let connection = require('./config/server');
+let serviceConstants = require('./constants/game-service');
+let gameService = require('./src/game-service');
 let app = express();
 
 app.use(bodyParser.json());
@@ -13,6 +15,12 @@ app.use(function(req, res, next) {
 });
 
 routes(app);
+
+/*
+ * Start the game service to draw the balls periodically
+ * It should run as a separate service to scale
+*/
+let timerId = setInterval(() => gameService(), serviceConstants.TIME_INTERVAL);
 
 let server = app.listen(connection.PORT, function () {
     console.log('app running on port.', server.address().port);

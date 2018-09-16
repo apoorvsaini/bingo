@@ -34,7 +34,11 @@ let appRouter = function (app) {
      * Verify with board data stored in MongoDB
     */
     app.get("/bingo/:id", function (req, res) {
-        res.status(response.OK_STATUS).send("Welcome to our restful API");
+        let id = req.params.id;
+        let data = ({
+            user_id: id
+        });
+        res.status(response.OK_STATUS).send(data);
     });
 
     /* 
@@ -42,7 +46,11 @@ let appRouter = function (app) {
      * Ball numbers to be Global, irrespective of the palyers and game instances
     */
     app.get("/draw", function (req, res) {
-        res.status(response.OK_STATUS).send("Welcome to our restful API");
+        let id = req.params.id;
+        let data = ({
+            user_id: id
+        });
+        res.status(response.OK_STATUS).send(data);
     });
 }
 
