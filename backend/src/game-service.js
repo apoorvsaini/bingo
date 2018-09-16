@@ -6,11 +6,19 @@
  * TODO: Last 5 balls should not be the same
 */
 
-let serviceConstants = require('../config/game-service');
+const serviceConstants = require('../config/game-service');
 const mongo = require('./mongo');
+const shuffle = require('../utils/shuffle');
+const balls = require('../store/balls');
 
 let gameStarted = false;
 let numbersDrawn = [];
+let counter = 0;
+
+for (let i = 1; i <= 100; i++)
+    balls.push(i);
+
+shuffle(balls);
 
 module.exports = function(io) {
     /*
@@ -39,9 +47,17 @@ module.exports = function(io) {
         console.log('game started');
     }*/
 
-    let newNumber = Math.floor((Math.random() * 100) + 1);
-    let ballObj = { ball: newNumber, time: Date.now() };
-    io.broadcast.emit('ball', ballObj)
-    //mongo.setBall(ballObj);
-    numbersDrawn.push(newNumber);
+    if (counter === 99) {
+        shuffle(balls);
+        counter = 0;
+        console.log('ran out of numbers');
+    }
+    else {
+        let newNumber = balls[counter];
+        let ballObj = { ball: newNumber, time: Date.now() };
+        io.broadcast.emit('ball', ballObj)
+        //mongo.setBall(ballObj);
+        numbersDrawn.push(newNumber);
+        counter += 1;
+    }
 }

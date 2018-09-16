@@ -21,14 +21,14 @@ routes(app);
 
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
-let timerId;
+let timerId = false;
 
 /*
- * SocketIO implementation
+ * Ball draw Service implementation
 */
 io.on('connection', function (socket) {
     userConnected += 1;
-    if (userConnected === 1) {
+    if (userConnected === 1 && !timerId) {
         timerId = setInterval(() => gameService(socket), serviceConstants.TIME_INTERVAL);
     }
 
@@ -38,6 +38,7 @@ io.on('connection', function (socket) {
         if (userConnected === 0) {
             console.log('game stopped')
             clearInterval(timerId);
+            timerId = false;
         }
     });
 });

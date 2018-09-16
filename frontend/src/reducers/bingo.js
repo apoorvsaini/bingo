@@ -22,6 +22,14 @@ const bingo = (state =
             return { ...state, ticketsData: Object.assign({}, action.payload) };
         }
 
+        case 'SET_BINGO_FALSE': {
+            return { ...state, bingoStatus: false, bingoTickets: [] };
+        }
+
+        case 'SET_BINGO_TRUE': {
+            return { ...state, bingoStatus: true };
+        }
+
         case 'NEW_NUMBER_LOADED': {
             let newMarkers = state.markedBalls;
             let newBingoStatus = state.bingoStatus;
@@ -40,7 +48,6 @@ const bingo = (state =
                         if (newMarkers[i].size === 25) {
                             newBingoStatus = true;
                             newBingoTickets.push(i);
-                            alert('Bingo!');
                         }
                     }
                 }

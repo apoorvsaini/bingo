@@ -15,3 +15,11 @@ export const setNewBall = ball => ({
     type: 'NEW_NUMBER_LOADED',
     payload: ball
 });
+
+export const setBingoFalse = () => ({
+    type: 'SET_BINGO_FALSE',
+});
+
+export const setBingoTrue = () => ({
+    type: 'SET_BINGO_TRUE',
+});

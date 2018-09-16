@@ -4,15 +4,7 @@
 */
 const gameConfig = require('../config/game-service');
 const userData = require('../store/tickets');
-
-
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-}
+const shuffle = require('../utils/shuffle');
 
 module.exports = function(id) {
     // TODO: check if numbers already given to this user from MongoDB
