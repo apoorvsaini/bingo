@@ -10,7 +10,7 @@ import { setConnected } from '../../actions/home';
 
 
 class Header extends React.Component {
-    //socket = io.connect(api.API_URL);
+    socket = io.connect(api.API_URL);
     constructor(props) {
         super(props);
     }
@@ -23,12 +23,11 @@ class Header extends React.Component {
     }
 
     componentDidMount() {
-        /*
         let _t = this;
         this.socket.on('ball', function (data) {
-            _t.props.setNewBall(data.ball);
+            console.log(data);
+            _t.props.setNewBall(data);
         });
-        */
     }
 
     componentDidUpdate() {
@@ -39,8 +38,8 @@ class Header extends React.Component {
         return (
             <div className = 'header'>
                 <div className = 'ball_ticker_area'>
-                    {this.props.ballsDrawn.map(ball => (
-                        <span key = {'ball-' + ball}> {ball} </span>
+                    {this.props.ballsDrawn.map(data => (
+                        <span key = {'ball-' + data.time}> {data.ball} </span>
                     ))}
                 </div>
             </div>

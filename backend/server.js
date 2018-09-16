@@ -1,12 +1,12 @@
-let express = require('express');
-let bodyParser = require('body-parser');
-let routes = require('./routes/routes');
-let connection = require('./config/server');
-let serviceConstants = require('./config/game-service');
-let gameService = require('./src/game-service');
+const express = require('express');
+const bodyParser = require('body-parser');
+const routes = require('./routes/routes');
+const connection = require('./config/server');
+const serviceConstants = require('./config/game-service');
+const gameService = require('./src/game-service');
 
 let app = express();
-let connectedUsers = new Set();
+let userConnected = 0;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,28 +21,31 @@ routes(app);
 
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
-
-
-/*
- * Start game service
- * To scale, it should become a separate service
-*/   
-let timerId = setInterval((io) => gameService(io), serviceConstants.TIME_INTERVAL);
+let timerId;
 
 /*
  * SocketIO implementation
 */
-/*
 io.on('connection', function (socket) {
-    socket.on('connected', function (data) {
-        console.log('new player connected');
-        console.log(data);
-        let userId = data.user_id;
-        connectedUsers.add(userId);
-        console.log(connectedUsers.size)
+    userConnected += 1;
+    if (userConnected === 1) {
+        timerId = setInterval(() => gameService(socket), serviceConstants.TIME_INTERVAL);
+    }
+
+    socket.on('disconnect', function () {
+        userConnected -= 1;
+        if (userConnected === 0) {
+            clearInterval(timerId);
+        }
     });
 });
-*/
+
+/*
+* Start game service
+* To scale, it should become a separate service
+*/   
+
+
 
 
 server.listen(connection.PORT, function () {

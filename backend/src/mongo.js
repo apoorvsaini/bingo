@@ -1,15 +1,15 @@
-let mongoConfig = require('../config/mongodb');
-let mongodb = require('mongodb').MongoClient;
+const mongoConfig = require('../config/mongodb');
+const mongodb = require('mongodb').MongoClient;
+//const inMemstore = require('data-store');
 
 module.exports = {
     // Save drawn number in mongodb
-    setBall: function(ball) {
+    setBall: function(ballObj) {
         mongodb.connect(mongoConfig.MONGO_URI, { useNewUrlParser: true }, function(err, db) {
             if (err) throw err;
 
             let dbo = db.db(mongoConfig.MONGODB_DB);
-            let query = { timestamp: Date.now(), ball: ball };
-            dbo.collection(mongoConfig.COLLECTION_BALLS).insertOne(query, function(err, result) {
+            dbo.collection(mongoConfig.COLLECTION_BALLS).insertOne(ballObj, function(err, result) {
                 if (err) throw err;
             });
         });
@@ -20,11 +20,13 @@ module.exports = {
         
     },
 
-    // Find the latest ball and send back to user
-    getBall: function() {
-
+    // Find the latest ball from in-memory and send back to user
+    getBall: function(lastStamp) {
+        
     },
 
     // Save generated tickets in mongoDB
-    setTickets: function() {}
+    setTickets: function() {
+
+    }
 }

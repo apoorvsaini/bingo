@@ -7,12 +7,12 @@
 */
 
 let serviceConstants = require('../config/game-service');
-let mongo = require('./mongo');
+const mongo = require('./mongo');
 
 let gameStarted = false;
 let numbersDrawn = [];
 
-module.exports = function() {
+module.exports = function(io) {
     if (numbersDrawn.length === serviceConstants.MAX_BALLS && gameStarted === true) {
         // Reset the game
         gameStarted = false;
@@ -22,14 +22,19 @@ module.exports = function() {
     else if (numbersDrawn.length < serviceConstants.MAX_BALLS && gameStarted === true) {
         // Continue the game, draw the ball
         let newNumber = Math.floor((Math.random() * 100) + 1);
-        mongo.setBall(newNumber);
+        let ballObj = { ball: newNumber, time: Date.now() };
+        io.broadcast.emit('ball', ballObj)
+        //mongo.setBall(ballObj);
+        console.log('new number');
         numbersDrawn.push(newNumber);
     }
     else if (numbersDrawn.length === 0 && gameStarted === false) {
         // Start the game
         gameStarted = true;
         let newNumber = Math.floor((Math.random() * 100) + 1);
-        mongo.setBall(newNumber);
+        let ballObj = { ball: newNumber, time: Date.now() };
+        io.broadcast.emit('ball', ballObj)
+        //mongo.setBall(ballObj);
         console.log('game started');
     }
 }

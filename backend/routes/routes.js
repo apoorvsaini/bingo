@@ -1,6 +1,7 @@
-let response = require('../constants/response');
-let auth = require('../src/auth');
-let generate = require('../src/generate');
+const response = require('../constants/response');
+const auth = require('../src/auth');
+const generate = require('../src/generate');
+const mongo = require('../src/mongo');
 
 let appRouter = function (app) {
     
@@ -49,11 +50,9 @@ let appRouter = function (app) {
      * Endpoint to get the latest ball/number and also provide the state of the game
      * Ball numbers to be Global, irrespective of the palyers and game instances
     */
-    app.get("/draw", function (req, res) {
-        let id = req.params.id;
-        let data = ({
-            user_id: id
-        });
+    app.get("/draw/:lastBallTime", function (req, res) {
+        let lastBallTime = req.params.lastBallTime;
+        let data = mongo.getBall(parseInt(lastBallTime));
         res.status(response.OK_STATUS).send(data);
     });
 }
