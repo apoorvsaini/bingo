@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
+import axios from 'axios';
 
 import api from '../../api/api-config';
 
@@ -25,6 +26,18 @@ class Header extends React.Component {
         });
 
         this.checkConnection();
+
+        // TODO: Temp method
+        setTimeout(function(){
+            axios.get(api.API_URL + api.API_BINGO + '/' + sessionStorage.getItem('userId') + '/' + 0)
+            .then(function (response) {
+                console.log("CLAIMING");
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }, 10000);
     }
 
     checkConnection() {

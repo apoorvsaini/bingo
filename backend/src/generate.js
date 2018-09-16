@@ -7,8 +7,6 @@ const userData = require('../store/tickets');
 const shuffle = require('../utils/shuffle');
 
 module.exports = function(id) {
-    // TODO: check if numbers already given to this user from MongoDB
-    
     if (userData.hasOwnProperty(id)) {
         return userData[id];
     }

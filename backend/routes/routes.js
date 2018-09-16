@@ -2,6 +2,8 @@ const response = require('../constants/response');
 const auth = require('../src/auth');
 const generate = require('../src/generate');
 const mongo = require('../src/mongo');
+const validate = require('../src/validate-bingo');
+const userData = require('../store/tickets');
 
 let appRouter = function (app) {
     
@@ -34,16 +36,14 @@ let appRouter = function (app) {
 
     /* 
      * Endpoint for validating bingo claim
-     * POST json: board numbers
+     * GET userId and json: board numbers
      * Verify with board data stored in MongoDB
      * If won, mongodb collection needs to be cleared
     */
-    app.get("/bingo/:id", function (req, res) {
-        let id = req.params.id;
-        let data = ({
-            user_id: id
-        });
-        res.status(response.OK_STATUS).send(data);
+    app.get("/bingo/:id/:board", function (req, res) {
+        let userId = req.params.id;
+        let boardId = req.params.board;
+        res.status(response.OK_STATUS).send(validate(userId, boardId));
     });
 
     /* 
