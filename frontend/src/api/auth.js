@@ -3,6 +3,7 @@
 */
 import api from './api-config';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 export default async function() {
     let promise = new Promise((resolve, reject) => {
@@ -26,6 +27,12 @@ export default async function() {
                 reject(null);
             })
         }
+    });
+
+    let socket = io.connect(api.API_URL);
+    socket.on('ball', function (data) {
+        console.log(data);
+        socket.emit('connected', { my: 'data' });
     });
 
     let result = await promise;
