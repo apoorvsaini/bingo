@@ -1,11 +1,12 @@
 let response = require('../constants/response');
 let auth = require('../src/auth');
+let generate = require('../src/generate');
 
 let appRouter = function (app) {
     
     // Default endpoint
     app.get("/", function(req, res) {
-        res.status(response.OK_STATUS).send("Welcome to our restful API");
+        res.status(response.OK_STATUS).send("Bingo Time!");
     });
 
     /* 
@@ -25,7 +26,9 @@ let appRouter = function (app) {
      * Store tickets in MongoDB to validate later
     */
     app.get("/generate/:id", function (req, res) {
-        res.status(response.OK_STATUS).send("Welcome to our restful API");
+        let id = req.params.id;
+        let data = generate(id);
+        res.status(response.OK_STATUS).send(data);
     });
 
     /* 
