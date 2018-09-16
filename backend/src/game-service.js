@@ -13,10 +13,12 @@ let gameStarted = false;
 let numbersDrawn = [];
 
 module.exports = function(io) {
+    /*
     if (numbersDrawn.length === serviceConstants.MAX_BALLS && gameStarted === true) {
         // Reset the game
         gameStarted = false;
         console.log('game stopped');
+        return;
     }
     else if (numbersDrawn.length < serviceConstants.MAX_BALLS && gameStarted === true) {
         // Continue the game, draw the ball
@@ -33,7 +35,13 @@ module.exports = function(io) {
         let newNumber = Math.floor((Math.random() * 100) + 1);
         let ballObj = { ball: newNumber, time: Date.now() };
         io.broadcast.emit('ball', ballObj)
-        //mongo.setBall(ballObj);
+        //mongo.setBall(newNumber);
         console.log('game started');
-    }
+    }*/
+
+    let newNumber = Math.floor((Math.random() * 100) + 1);
+    let ballObj = { ball: newNumber, time: Date.now() };
+    io.broadcast.emit('ball', ballObj)
+    //mongo.setBall(ballObj);
+    numbersDrawn.push(newNumber);
 }

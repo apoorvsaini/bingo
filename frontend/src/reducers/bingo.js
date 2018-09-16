@@ -4,7 +4,9 @@ const bingo = (state =
         loading: false,
         ticketsData: {},
         ballsDrawn: [],
-        markedBalls: []
+        markedBalls: {},
+        bingoStatus: false,
+        bingoTickets: [],
     }, action) => {
         
     switch (action.type) {
@@ -21,7 +23,33 @@ const bingo = (state =
         }
 
         case 'NEW_NUMBER_LOADED': {
-            return { ...state, markedBalls: [...state.markedBalls, action.payload.ball], ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6) };
+            let newMarkers = state.markedBalls;
+            let newBingoStatus = state.bingoStatus;
+            let newBingoTickets = state.bingoTickets;
+
+            if (newBingoStatus === false) {
+                for (let i in state.ticketsData) {
+                    console.log('here2');
+                    let tickets = state.ticketsData[i];
+                    console.log(tickets);
+                    if (tickets.indexOf(action.payload.ball) !== -1) {
+                        if (!(i in newMarkers))
+                            newMarkers[i] = new Array();
+                        
+                        newMarkers[i].push(action.payload.ball);
+    
+                        if (newMarkers[i].length === 25) {
+                            newBingoStatus = true;
+                            newBingoTickets.push(i);
+                        }
+                    }
+                }
+            }
+
+            console.log('new markers')
+            console.log(newMarkers);
+
+            return { ...state, markedBalls: Object.assign({}, newMarkers), ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6), bingoStatus: newBingoStatus, bingoTickets: newBingoTickets };
         }
 
         default: return state;

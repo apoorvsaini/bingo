@@ -7,6 +7,7 @@
     float: left;
     width: 18%;
     border: 1px solid #000000;
+    text-align: center;
 }
 
 .ticket_grid:after {
@@ -20,6 +21,7 @@
     width: 18%;
     background: #000000;
     color: #ffffff;
+    text-align: center;
     border: 1px solid #000000;
 }
 
@@ -27,4 +29,15 @@
     content: "";
     display: block;
     padding-bottom: 100%;
+}
+
+.grid_ball {
+    font-size: 1.1em;
+    position: relative;
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
+    float: left;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 100%);
 }

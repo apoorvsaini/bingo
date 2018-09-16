@@ -15,8 +15,8 @@ class Ticket extends React.Component {
             this.ticketDom = 'LOADING...';
         }
         else if (this.props.loading === false && this.props.data != null) {
-            this.ticketDom = this.props.data.map(id => (
-                <div className = {((this.props.markedBalls).indexOf(id) !== -1) ? 'ticket_grid_marked' : 'ticket_grid'} key = {'ticket_grid-' + id}> {id} </div>
+            this.ticketDom = this.props.data.map(ball => (
+                <div className = {((this.props.id) in this.props.markedBalls && (this.props.markedBalls[this.props.id]).indexOf(ball) !== -1) ? 'ticket_grid_marked' : 'ticket_grid'} key = {'ticket_grid-' + ball}> <span className = 'grid_ball'>{ball}</span> </div>
             ));
         }
         else {

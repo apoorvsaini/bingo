@@ -38,7 +38,7 @@ class BingoContainer extends React.Component {
             <div className = 'bingo_container'>
                 {Object.keys(this.props.ticketsData).map(id => (
                     <div className = 'ticket_area' key = {id} id = {id}>
-                        <Ticket id = {id} loading = {this.props.loading} data = {this.props.ticketsData[id]}/>
+                        <Ticket id = {id} loading = {this.props.loading} data = {(id in this.props.ticketsData) ? this.props.ticketsData[id] : null}/>
                     </div>
                 ))}
             </div>
