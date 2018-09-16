@@ -19,12 +19,6 @@ app.use(function(req, res, next) {
 
 routes(app);
 
-/*
- * Start the game service to draw the balls periodically
- * It should run as a separate service to scale
-*/
-let timerId = setInterval(() => gameService(), serviceConstants.TIME_INTERVAL);
-
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 
@@ -36,10 +30,12 @@ io.on('connection', function (socket) {
         console.log('new player connected');
         console.log(data);
         let userId = data.user_id;
-        if (connectedUsers.length === 0) {
-            clearInterval(timerId);
-            connectedUsers.add(userId);
-            setInterval(() => gameService(), serviceConstants.TIME_INTERVAL);
+        connectedUsers.add(userId);
+        console.log(connectedUsers.size)
+
+        // Start when first player is connected
+        if (connectedUsers.size === 1) {
+            let timerId = setInterval((io) => gameService(socket), serviceConstants.TIME_INTERVAL);
         }
     });
 });
