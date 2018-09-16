@@ -39,7 +39,7 @@ const bingo = (state =
     
                         if (newMarkers[i].size === 25) {
                             newBingoStatus = true;
-                            newBingoTickets.add(i);
+                            newBingoTickets.push(i);
                             alert('Bingo!');
                         }
                     }
