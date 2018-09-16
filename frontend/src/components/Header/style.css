@@ -14,10 +14,27 @@
     top: 10%;
     width: 60%;
     background: #ffffff;
+    padding-top: 5px;
     margin: 0px auto !important;
 }
 
 .balls {
-    float: left;
+    float: right;
     margin-left: 10px;
+    font-size: 2em;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding: 5px;
+    
+}
+
+.last_ball {
+    float: right;
+    color: aqua;
+    font-size: 2em;
+    margin-left: 20px;
+    margin-right: 10px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding: 5px;
 }

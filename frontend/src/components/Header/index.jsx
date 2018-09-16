@@ -18,7 +18,7 @@ class Header extends React.Component {
     componentDidMount() {
         let _t = this;
         this.socket = io.connect(api.API_URL);
-        
+
         this.socket.on('ball', function (data) {
             console.log(data);
             _t.props.setNewBall(data);
@@ -42,8 +42,8 @@ class Header extends React.Component {
         return (
             <div className = 'header'>
                 <div className = 'ball_ticker_area'>
-                    {this.props.ballsDrawn.map(data => (
-                        <span className = 'balls' key = {'ball-' + data.time}> {data.ball} </span>
+                    {this.props.ballsDrawn.map((data, index) => (
+                        <span className = {(index === 0) ? 'last_ball' : 'balls'} key = {'ball-' + data.time}> {data.ball} </span>
                     ))}
                 </div>
             </div>

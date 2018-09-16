@@ -4,6 +4,7 @@ const bingo = (state =
         loading: false,
         ticketsData: {},
         ballsDrawn: [],
+        markedBalls: []
     }, action) => {
         
     switch (action.type) {
@@ -20,7 +21,7 @@ const bingo = (state =
         }
 
         case 'NEW_NUMBER_LOADED': {
-            return { ...state, ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6) };
+            return { ...state, markedBalls: [...state.markedBalls, action.payload.ball], ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6) };
         }
 
         default: return state;

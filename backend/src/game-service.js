@@ -17,7 +17,6 @@ module.exports = function(io) {
         // Reset the game
         gameStarted = false;
         console.log('game stopped');
-        return;
     }
     else if (numbersDrawn.length < serviceConstants.MAX_BALLS && gameStarted === true) {
         // Continue the game, draw the ball

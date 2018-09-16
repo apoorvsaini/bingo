@@ -16,7 +16,7 @@ class Ticket extends React.Component {
         }
         else if (this.props.loading === false && this.props.data != null) {
             this.ticketDom = this.props.data.map(id => (
-                <div className = 'ticket_grid' key = {'ticket_grid-' + id}> {id} </div>
+                <div className = {((this.props.markedBalls).indexOf(id) !== -1) ? 'ticket_grid_marked' : 'ticket_grid'} key = {'ticket_grid-' + id}> {id} </div>
             ));
         }
         else {
@@ -32,5 +32,12 @@ class Ticket extends React.Component {
 
 }
 
+function mapStateToProps(props) {
+    return ({
+        markedBalls: props.bingo.markedBalls,
+    });
+}
 
-export default connect(null, null)(Ticket); 
+
+
+export default connect(mapStateToProps, null)(Ticket); 
