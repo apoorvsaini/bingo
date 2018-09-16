@@ -38,3 +38,7 @@
     border-radius: 10px;
     padding: 5px;
 }
+
+.bingo_button {
+    float: left;
+}

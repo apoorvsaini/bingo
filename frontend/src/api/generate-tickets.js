@@ -15,7 +15,6 @@ export default async function() {
         axios.get(api.API_URL + api.API_GENERATE + '/' + sessId)
         .then(function (response) {
             let data = response.data;
-            console.log(data);
             resolve(data);
         })
         .catch(function (error) {

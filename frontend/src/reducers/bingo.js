@@ -53,9 +53,6 @@ const bingo = (state =
                 }
             }
 
-            console.log('new markers')
-            console.log(newMarkers);
-
             return { ...state, markedBalls: Object.assign({}, newMarkers), ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6), bingoStatus: newBingoStatus, bingoTickets: newBingoTickets };
         }
 

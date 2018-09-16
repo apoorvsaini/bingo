@@ -10,6 +10,7 @@ export default async function() {
     .then(function (response) {
         console.log("CLAIMING");
         console.log(response);
+        return response.data;
     })
     .catch(function (error) {
         console.log(error);

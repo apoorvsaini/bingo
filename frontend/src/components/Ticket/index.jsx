@@ -11,7 +11,6 @@ class Ticket extends React.Component {
     }
 
     render() {
-        console.log(this.props.data);
         if (this.props.loading === true) {
             this.ticketDom = 'LOADING...';
         }

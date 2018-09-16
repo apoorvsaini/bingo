@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
-import axios from 'axios';
 
 import api from '../../api/api-config';
+import claimBingo from '../../api/claim-bingo';
 
 import './style.css';
 import { setNewBall } from '../../actions/bingo';
@@ -16,16 +16,8 @@ class Header extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        let _t = this;
-        this.socket = io.connect(api.API_URL);
-
-        this.socket.on('ball', function (data) {
-            console.log(data);
-            _t.props.setNewBall(data);
-        });
-
-        this.checkConnection();
+    claimBingo(event) {
+        console.log(claimBingo());
     }
 
     checkConnection() {
@@ -33,6 +25,17 @@ class Header extends React.Component {
             console.log('reconnecting...');
             this.socket = io.connect(api.API_URL);
         }
+    }
+
+    componentDidMount() {
+        let _t = this;
+        this.socket = io.connect(api.API_URL);
+
+        this.socket.on('ball', function (data) {
+            _t.props.setNewBall(data);
+        });
+
+        this.checkConnection();
     }
 
     componentDidUpdate() {
@@ -43,6 +46,9 @@ class Header extends React.Component {
         return (
             <div className = 'header'>
                 <div className = 'ball_ticker_area'>
+                    <button className = 'bingo_button' onClick = {(e) => this.claimBingo(e)}>
+                        Shout Bingo!
+                    </button>
                     {this.props.ballsDrawn.map((data, index) => (
                         <span className = {(index === 0) ? 'last_ball' : 'balls'} key = {'ball-' + data.time}> {data.ball} </span>
                     ))}

@@ -46,7 +46,6 @@ class Home extends React.Component {
             this.homeDom = 'Error';
         }
         else {
-            console.log(this.props.userId);
             this.homeDom = <BingoContainer />;
         }
 
