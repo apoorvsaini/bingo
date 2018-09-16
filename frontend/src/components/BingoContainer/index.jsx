@@ -32,8 +32,11 @@ class BingoContainer extends React.Component {
     }
 
     render() {
-        if(Object.keys(this.props.ticketsData).length === 0) {
+        if(Object.keys(this.props.ticketsData).length === 0 && this.props.loading === false) {
             return (<div className = 'home'> ERROR! </div>);
+        }
+        else if (Object.keys(this.props.ticketsData).length === 0 && this.props.loading === true) {
+            return (<div className = 'home'> Loading... </div>);
         }
         else {
             return (

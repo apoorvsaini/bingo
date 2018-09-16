@@ -4,7 +4,7 @@ const bingo = (state =
         loading: false,
         ticketsData: {},
         ballsDrawn: [],
-        markedBalls: {},
+        markedBalls: new Set(),
         bingoStatus: false,
         bingoTickets: [],
     }, action) => {
@@ -29,18 +29,17 @@ const bingo = (state =
 
             if (newBingoStatus === false) {
                 for (let i in state.ticketsData) {
-                    console.log('here2');
                     let tickets = state.ticketsData[i];
-                    console.log(tickets);
+                    
                     if (tickets.indexOf(action.payload.ball) !== -1) {
                         if (!(i in newMarkers))
-                            newMarkers[i] = new Array();
-                        if (newMarkers[i].indexOf(action.payload.ball) === -1)
-                            newMarkers[i].push(action.payload.ball);
+                            newMarkers[i] = new Set();
+                        
+                        newMarkers[i].add(action.payload.ball);
     
-                        if (newMarkers[i].length === 25) {
+                        if (newMarkers[i].size === 25) {
                             newBingoStatus = true;
-                            newBingoTickets.push(i);
+                            newBingoTickets.add(i);
                             alert('Bingo!');
                         }
                     }
