@@ -5,8 +5,8 @@ import './style.css';
 import { setUserId, setErr } from '../../actions/home';
 import auth from '../../api/auth';
 
-import BingoContainer from '../BingoContainer'
-import Header from '../Header'
+import BingoContainer from '../BingoContainer';
+import Header from '../Header';
 
 class Home extends React.Component {
     homeDom = <div></div>;

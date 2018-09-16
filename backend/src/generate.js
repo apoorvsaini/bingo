@@ -2,7 +2,7 @@
  * Generate 100 numbers for user's tickets
  * Shuffle and divide the numbers into 4 tickets
 */
-let gameConfig = require('../constants/game-service');
+let gameConfig = require('../config/game-service');
 let userData = require('../store/tickets');
 
 

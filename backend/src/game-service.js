@@ -5,7 +5,7 @@
  * The numbers will be stored in-memory for validating the Bingo! claims
 */
 
-let serviceConstants = require('../constants/game-service');
+let serviceConstants = require('../config/game-service');
 let gameStarted = false;
 let numbersDrawn = [];
 

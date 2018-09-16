@@ -2,7 +2,7 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let routes = require('./routes/routes');
 let connection = require('./config/server');
-let serviceConstants = require('./constants/game-service');
+let serviceConstants = require('./config/game-service');
 let gameService = require('./src/game-service');
 let app = express();
 
