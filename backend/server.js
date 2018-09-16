@@ -6,6 +6,7 @@ let serviceConstants = require('./config/game-service');
 let gameService = require('./src/game-service');
 
 let app = express();
+let connectedUsers = new Set();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +23,7 @@ routes(app);
  * Start the game service to draw the balls periodically
  * It should run as a separate service to scale
 */
-//let timerId = setInterval(() => gameService(), serviceConstants.TIME_INTERVAL);
+let timerId = setInterval(() => gameService(), serviceConstants.TIME_INTERVAL);
 
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
@@ -34,6 +35,12 @@ io.on('connection', function (socket) {
     socket.on('connected', function (data) {
         console.log('new player connected');
         console.log(data);
+        let userId = data.user_id;
+        if (connectedUsers.length === 0) {
+            clearInterval(timerId);
+            connectedUsers.add(userId);
+            setInterval(() => gameService(), serviceConstants.TIME_INTERVAL);
+        }
     });
 });
 
