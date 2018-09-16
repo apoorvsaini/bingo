@@ -1,0 +1,28 @@
+.bingo_container {
+    position: relative;
+    top: 100px;
+    width: 60%;
+    min-height: 200px;
+    height: auto;
+    flex: 1;
+}
+
+.ticket_area {
+    position: relative;
+    float: left;
+    background: #FFF;
+    width: 50%;
+    margin-bottom: 100px;
+}
+
+.ticket_area:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+    .bingo_container {
+        width: 100%;
+    }
+}

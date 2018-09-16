@@ -1,0 +1,16 @@
+.ticket {
+    position: relative;
+    width: 100%;
+}
+
+.ticket_grid {
+    float: left;
+    width: 18%;
+    border: 1px solid #000000;
+}
+
+.ticket_grid:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}

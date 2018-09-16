@@ -5,6 +5,9 @@ import './style.css';
 import { setUserId, setErr } from '../../actions/home';
 import auth from '../../api/auth';
 
+import BingoContainer from '../BingoContainer'
+import Header from '../Header'
+
 class Home extends React.Component {
     homeDom = <div></div>;
 
@@ -44,11 +47,12 @@ class Home extends React.Component {
         }
         else {
             console.log(this.props.userId);
-            this.homeDom = <div></div>;
+            this.homeDom = <BingoContainer />;
         }
 
         return (
           <div className = 'home'>
+            <Header />
             { this.homeDom }
           </div>
         );
