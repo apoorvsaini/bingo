@@ -12,6 +12,6 @@ export const setTicketsData = data => ({
 });
 
 export const setNewBall = ball => ({
-    type: 'NEW_TICKET_LOADED',
+    type: 'NEW_NUMBER_LOADED',
     payload: ball
 });

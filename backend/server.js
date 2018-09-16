@@ -22,9 +22,17 @@ routes(app);
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 
+
+/*
+ * Start game service
+ * To scale, it should become a separate service
+*/   
+let timerId = setInterval((io) => gameService(io), serviceConstants.TIME_INTERVAL);
+
 /*
  * SocketIO implementation
 */
+/*
 io.on('connection', function (socket) {
     socket.on('connected', function (data) {
         console.log('new player connected');
@@ -32,13 +40,9 @@ io.on('connection', function (socket) {
         let userId = data.user_id;
         connectedUsers.add(userId);
         console.log(connectedUsers.size)
-
-        // Start when first player is connected
-        if (connectedUsers.size === 1) {
-            let timerId = setInterval((io) => gameService(socket), serviceConstants.TIME_INTERVAL);
-        }
     });
 });
+*/
 
 
 server.listen(connection.PORT, function () {

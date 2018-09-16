@@ -20,7 +20,7 @@ module.exports = function(io) {
     else if (numbersDrawn.length < serviceConstants.MAX_BALLS && gameStarted === true) {
         // Continue the game, draw the ball
         let newNumber = Math.floor((Math.random() * 100) + 1);
-        io.emit('ball', { ball: newNumber });
+        io.broadcast.emit('ball', { ball: newNumber });
         numbersDrawn.push(newNumber);
     }
     else if (numbersDrawn.length === 0 && gameStarted === false) {
@@ -28,7 +28,7 @@ module.exports = function(io) {
         gameStarted = true;
         let newNumber = Math.floor((Math.random() * 100) + 1);
         numbersDrawn.push(newNumber);
-        io.emit('ball', { ball: newNumber });
+        io.broadcast.emit('ball', { ball: newNumber });
         console.log('game started');
     }
 }

@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "mongodb": "^3.1.6",
     "npm": "^6.4.1",
     "socket.io": "^2.1.1",
     "uniqid": "^5.0.3"

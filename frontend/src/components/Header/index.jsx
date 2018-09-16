@@ -10,30 +10,38 @@ import { setConnected } from '../../actions/home';
 
 
 class Header extends React.Component {
+    //socket = io.connect(api.API_URL);
     constructor(props) {
         super(props);
     }
 
     connectToSocket() {
         if (this.props.userId !== null && this.props.connected === false) {
-            let socket = io.connect(api.API_URL);
-            socket.emit('connected', { 'user_id': this.props.userId });
+            this.socket.emit('connected', { 'user_id': this.props.userId });
             this.props.setConnected(true);
-            socket.on('ball', function (data) {
-                console.log(data);
-            });
         }
     }
 
+    componentDidMount() {
+        /*
+        let _t = this;
+        this.socket.on('ball', function (data) {
+            _t.props.setNewBall(data.ball);
+        });
+        */
+    }
+
     componentDidUpdate() {
-        this.connectToSocket();
+        //this.connectToSocket();
     }
 
     render() {
         return (
             <div className = 'header'>
                 <div className = 'ball_ticker_area'>
-
+                    {this.props.ballsDrawn.map(ball => (
+                        <span key = {'ball-' + ball}> {ball} </span>
+                    ))}
                 </div>
             </div>
         );
@@ -50,7 +58,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(props) {
     return ({
-        ticketsDrawn: props.bingo.ticketsDrawn,
+        ballsDrawn: props.bingo.ballsDrawn,
         ticketsData: props.bingo.ticketsData,
         connected: props.home.connected,
     });

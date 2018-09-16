@@ -3,7 +3,7 @@ const bingo = (state =
         tickets: [0, 1, 2, 3],
         loading: false,
         ticketsData: {},
-        ticketsDrawn: [],
+        ballsDrawn: [],
     }, action) => {
         
     switch (action.type) {
@@ -19,17 +19,11 @@ const bingo = (state =
             return { ...state, ticketsData: Object.assign({}, action.payload) };
         }
 
-        case 'NEW_TICKET_LOADED': {
-            let newState = state.ticketsDrawn;
-            if (newState.length === 4) {
-                newState.pop();
-                newState.unshift(action.payload);
-            }
-            else {
-                newState.unshift(action.payload);
-            }
+        case 'NEW_NUMBER_LOADED': {
+            let newState = state.ballsDrawn;
+            console.log(([action.payload, ...state.ballsDrawn]).slice(0, 4));
 
-            return { ...state, ticketsDrawn: newState };
+            return { ...state, ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 4) };
         }
 
         default: return state;
