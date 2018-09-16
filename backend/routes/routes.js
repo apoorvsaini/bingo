@@ -35,6 +35,7 @@ let appRouter = function (app) {
      * Endpoint for validating bingo claim
      * POST json: board numbers
      * Verify with board data stored in MongoDB
+     * If won, mongodb collection needs to be cleared
     */
     app.get("/bingo/:id", function (req, res) {
         let id = req.params.id;
