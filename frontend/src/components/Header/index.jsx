@@ -17,9 +17,15 @@ class Header extends React.Component {
     }
 
     claimBingo(event) {
-        claimBingo().then(function(result) {
-            console.log(result);
-        });
+        if (this.props.bingoTickets.length > 0) {
+            claimBingo(this.props.bingoTickets[0]).then(function(result) {
+                alert(result);
+            });
+        }
+        else {
+            alert('LIAR!');
+        }
+        
     }
 
     checkConnection() {
@@ -72,6 +78,7 @@ function mapStateToProps(props) {
     return ({
         ballsDrawn: props.bingo.ballsDrawn,
         ticketsData: props.bingo.ticketsData,
+        bingoTickets: props.bingo.bingoTickets,
         connected: props.home.connected,
     });
 }
