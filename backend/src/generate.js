@@ -16,6 +16,7 @@ function shuffle(a) {
 
 module.exports = function(id) {
     // TODO: check if numbers already given to this user from MongoDB
+    
     if (userData.hasOwnProperty(id)) {
         return userData[id];
     }

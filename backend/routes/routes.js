@@ -45,7 +45,7 @@ let appRouter = function (app) {
     });
 
     /* 
-     * Endpoint to draw the next ball
+     * Endpoint to get the latest ball/number and also provide the state of the game
      * Ball numbers to be Global, irrespective of the palyers and game instances
     */
     app.get("/draw", function (req, res) {

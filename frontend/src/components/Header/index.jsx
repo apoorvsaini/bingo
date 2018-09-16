@@ -17,6 +17,9 @@ class Header extends React.Component {
     render() {
         return (
             <div className = 'header'>
+                <div className = 'ball_ticker_area'>
+                    
+                </div>
             </div>
         );
     }
