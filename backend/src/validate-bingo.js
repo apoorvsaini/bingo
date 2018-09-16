@@ -6,9 +6,11 @@ const balls = require('../store/balls');
 
 module.exports = function(userId, boardId) {
     let resultJson = { claim: false };
+    // Take last 100 balls
+    let lastBalls = balls.slice(-100);
     let data = userData[userId][boardId];
-    let result = data.every(function(val) { return balls.indexOf(val) >= 0; });
+    let result = data.every(function(val) { return lastBalls.indexOf(val) >= 0; });
     resultJson['claim'] = result;
-    
+
     return (resultJson);
 }

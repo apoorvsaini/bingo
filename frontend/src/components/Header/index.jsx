@@ -17,7 +17,9 @@ class Header extends React.Component {
     }
 
     claimBingo(event) {
-        console.log(claimBingo());
+        claimBingo().then(function(result) {
+            console.log(result);
+        });
     }
 
     checkConnection() {

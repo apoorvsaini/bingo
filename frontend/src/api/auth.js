@@ -29,6 +29,5 @@ export default async function() {
     });
 
     let result = await promise;
-
     return result;
 }

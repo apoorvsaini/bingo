@@ -6,13 +6,20 @@ import api from './api-config';
 import axios from 'axios';
 
 export default async function() {
-    axios.get(api.API_URL + api.API_BINGO + '/' + sessionStorage.getItem('userId') + '/' + 0)
-    .then(function (response) {
-        console.log("CLAIMING");
-        console.log(response);
-        return response.data;
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
+    let promise = new Promise((resolve, reject) => {
+        axios.get(api.API_URL + api.API_BINGO + '/' + sessionStorage.getItem('userId') + '/' + 0)
+        .then(function (response) {
+            console.log("CLAIMING");
+            console.log(response);
+            if ('claim' in response.data)
+                resolve(response.data.claim);
+            else resolve(false);
+        })
+        .catch(function (error) {
+            reject(null);
+        })
+    });
+
+    let result = await promise;
+    return result;
 }

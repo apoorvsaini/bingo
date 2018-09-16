@@ -8,7 +8,7 @@
 const serviceConstants = require('../config/game-service');
 const mongo = require('./mongo');
 const shuffle = require('../utils/shuffle');
-const balls = require('../store/balls');
+let balls = require('../store/balls');
 
 let counter = 0;
 let allBalls = [];
