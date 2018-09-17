@@ -79,6 +79,6 @@ On the backend, the code to rank the player who submits a valid ticket first is 
 
 ## To Do
 
-* **Improved UI** Although the current UI is responsive and not that bad, there is a lot of scope for improvement
-* **Move to MongoDB** Currently the data is stored in-memory on the backend and I have already setup methods to store them in a 3-node MongoDB cluster.
+* **Improved UI** Although the current UI is responsive to an extent and not that bad, there is a lot of scope for improvement
+* **Move to MongoDB** Needs persistence. Currently the data is stored in-memory on the backend and I have already setup methods to store them in a multi-node MongoDB cluster at MongoDB Atlas.
 * **Add ranking and syncing for multi-player game** The logic is already in place on both backend and frontend, but needs more testing.
