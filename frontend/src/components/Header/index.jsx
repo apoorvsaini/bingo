@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
 import api from '../../api/api-config';
+import validateBingo from '../../api/claim-bingo';
 
 import './style.css';
 import '../../assets/bulma.min.css';
@@ -24,7 +25,7 @@ class Header extends React.Component {
     claimBingo(event) {
         let _t = this;
         if (this.props.bingoTickets.length > 0) {
-            claimBingo(this.props.bingoTickets[0]).then(function(result) {
+            validateBingo(this.props.bingoTickets[0]).then(function(result) {
                 if (result) {
                     _t.socket.emit('winner', sessionStorage.getItem('userId'))
                 }

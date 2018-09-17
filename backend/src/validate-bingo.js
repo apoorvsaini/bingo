@@ -5,6 +5,7 @@ const userData = require('../store/tickets');
 const balls = require('../store/balls');
 
 module.exports = function(userId, boardId) {
+    console.log('validating... ' + userId + ' ' + boardId)
     let resultJson = { claim: false };
     // Take last 200 balls
     let lastBalls = balls.slice(-200);
