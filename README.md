@@ -52,14 +52,23 @@ Backend uses *Node.js, with express and Socket.io (to run Ball/number drawing se
     .
     ├── package.json
     ├── server.js
-    ├── config          # All server and socket configs
+    ├── config          # All server, game and socket configs
     ├── constants       # Constant strings to be used
     ├── routes          # Express routes
     ├── src             # Logic for the APIs and services
     ├── store           # In-memory stores
     └── utils           # Helper functions
 
+### How it works
+
+The Backend server is the Game Master and has two components:
+
+* API - To generate userIds, generate tickets for the users, validate a bingo claim etc.
+* Socket Service - Keep on serving the new balls, push to the clients and keep track of them
+
+On the React frontend the user will start getting the new balls/numbers as they come and frontend will automatically mark them in the Tickets. **User can at any time claim Bingo!, which has to be validated by the backend**.
+
 ## To Do
 
 * **Move to MongoDB** Currently the data is stored in-memory on the backend and I have already setup methods to store them in a 3-node MongoDB cluster.
-* **Add ranking and syncing for multi-player game** I am half-way through it and the logic is already in place on both backend and frontend
+* **Add ranking and syncing for multi-player game** The logic is already in place on both backend and frontend, but needs more testing.
