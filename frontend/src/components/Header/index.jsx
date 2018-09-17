@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
 import api from '../../api/api-config';
-import claimBingo from '../../api/claim-bingo';
 
 import './style.css';
+import '../../assets/bulma.min.css';
 import { setNewBall, stopGame, startGame } from '../../actions/bingo';
 import { setConnected } from '../../actions/home';
 
@@ -39,7 +39,6 @@ class Header extends React.Component {
     }
 
     startGame(event) {
-        alert(sessionStorage.getItem('userId'));
         let _t = this;
         this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
 
@@ -95,14 +94,14 @@ class Header extends React.Component {
     render() {
         if (this.props.gameStarted === true && this.socket.connected) {
             this.startButton = <div></div>;
-            this.bingoButtton = <button className = 'bingo_button' onClick = {(e) => this.claimBingo(e)}>Shout Bingo!</button>
+            this.bingoButtton = <button className = 'bingo_button button is-danger' onClick = {(e) => this.claimBingo(e)}>Shout Bingo!</button>
         }
         else if (this.props.gameStarted === true && !this.socket.connected) {
-            this.startButton = <button className = 'bingo_button' onClick = {(e) => this.startGame(e)}>Wait...</button>;
+            this.startButton = <button className = 'bingo_button button is-warning'>Wait...</button>;
             this.bingoButtton = <div></div>;
         }  
         else {
-            this.startButton = <button className = 'bingo_button' onClick = {(e) => this.startGame(e)}>Start Game!</button>;
+            this.startButton = <button className = 'bingo_button button is-dark' onClick = {(e) => this.startGame(e)}>Start Game!</button>;
             this.bingoButtton = <div></div>;
         }
 

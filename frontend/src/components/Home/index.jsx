@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import '../../assets/bulma.min.css';
 import './style.css';
 import { setUserId, setErr } from '../../actions/home';
 import auth from '../../api/auth';
