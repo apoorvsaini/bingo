@@ -4,7 +4,7 @@ const routes = require('./routes/routes');
 const connection = require('./config/server');
 const serviceConstants = require('./config/game-service');
 const gameService = require('./src/game-service');
-let winnerList = require('../store/winners');
+let winnerList = require('./store/winners');
 
 let app = express();
 let userConnected = 0;
@@ -26,15 +26,16 @@ let timerId = false;
 
 /*
  * Ball draw Service implementation
-*/
+ * Start game service
+ * To scale, it should become a separate service
+*/  
+
 io.on('connection', function (socket) {
     userConnected += 1;
 
-    socket.on('start', function () {
-        if (userConnected >= 1 && !timerId) {
-            timerId = setInterval(() => gameService(socket), serviceConstants.TIME_INTERVAL);
-        }
-    });
+    if (!timerId) {
+        timerId = setInterval(() => gameService(socket), serviceConstants.TIME_INTERVAL);
+    }
 
     socket.on('end', function () {
         winnerList = new Array();
@@ -60,13 +61,7 @@ io.on('connection', function (socket) {
             timerId = false;
         }
     });
-});
-
-/*
-* Start game service
-* To scale, it should become a separate service
-*/   
-
+}); 
 
 
 

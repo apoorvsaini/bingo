@@ -75,8 +75,10 @@ class Header extends React.Component {
         }); */
 
         this.props.startGame();
+        this.checkConnection();
 
         // If no new balls are received in next 2 seconds, restart
+        /*
         if (!this.timer) {
             if(!this.socket.connected) {
                 this.timer = setInterval(function(){ 
@@ -89,13 +91,17 @@ class Header extends React.Component {
                     }
                 }, 2000);
             }
-        }
+        }*/
     }
 
     checkConnection() {
         if(!this.socket.connected) {
             this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
         }
+    }
+
+    componentDidUpdate() {
+        this.checkConnection();
     }
 
     render() {

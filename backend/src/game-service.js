@@ -33,5 +33,8 @@ module.exports = function(io) {
         //mongo.setBall(ballObj);
         balls.push(newNumber);
         counter += 1;
+
+        // Mark numbers on the user's tickets in-memory
+        
     }
 }

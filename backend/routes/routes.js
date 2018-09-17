@@ -4,6 +4,7 @@ const generate = require('../src/generate');
 const mongo = require('../src/mongo');
 const validate = require('../src/validate-bingo');
 const userData = require('../store/tickets');
+const balls = require('../store/balls');
 
 let appRouter = function (app) {
     
@@ -48,10 +49,15 @@ let appRouter = function (app) {
      * Endpoint to get the latest ball/number and also provide the state of the game
      * Ball numbers to be Global, irrespective of the palyers and game instances
     */
-    app.get("/draw/:lastBallTime", function (req, res) {
+    app.get("/draw", function (req, res) {
+        /*
         let lastBallTime = req.params.lastBallTime;
         let data = mongo.getBall(parseInt(lastBallTime));
-        res.status(response.OK_STATUS).send(data);
+        */
+        let lastBall = balls[balls.length - 1];
+        if (balls.length === 0) lastBall = 0
+
+        res.status(response.OK_STATUS).send({ last_ball: lastBall });
     });
 }
 
