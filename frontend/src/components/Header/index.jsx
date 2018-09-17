@@ -11,9 +11,16 @@ import { setConnected } from '../../actions/home';
 
 
 class Header extends React.Component {
-    socket = io.connect(api.API_URL);
+    socket;
+
     constructor(props) {
         super(props);
+
+        this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
+        this.socket.emit('msg','yo');
+        this.socket.on('reconnect', function (data) {
+            console.log('re-connected');
+        });
     }
 
     claimBingo(event) {
@@ -25,7 +32,6 @@ class Header extends React.Component {
         else {
             alert('LIAR!');
         }
-        
     }
 
     checkConnection() {

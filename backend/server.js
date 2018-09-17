@@ -29,14 +29,15 @@ let timerId = false;
 io.on('connection', function (socket) {
     userConnected += 1;
     if (userConnected === 1 && !timerId) {
+        console.log('game started');
         timerId = setInterval(() => gameService(socket), serviceConstants.TIME_INTERVAL);
     }
 
     socket.on('disconnect', function () {
         userConnected -= 1;
-        
+        console.log('user disconnected ' + userConnected);
         if (userConnected === 0) {
-            console.log('game stopped');
+            console.log('game stopped')
             clearInterval(timerId);
             timerId = false;
         }
