@@ -1,7 +1,8 @@
 /*
  * Generate 100 numbers for user's tickets
  * Shuffle and divide the numbers into 4 tickets
-*/
+ */
+
 const gameConfig = require('../config/game-service');
 const userData = require('../store/tickets');
 const shuffle = require('../utils/shuffle');

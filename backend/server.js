@@ -28,7 +28,7 @@ let timerId = false;
  * Ball draw Service implementation
  * Start game service
  * To scale, it should become a separate service
-*/  
+ */  
 
 io.on('connection', function (socket) {
     userConnected += 1;

@@ -16,7 +16,7 @@ let appRouter = function (app) {
 
     /* 
      * Endpoint for generating userId
-    */
+     */
     app.get("/auth/", function (req, res) {
         let data = ({ user_id: auth() });
         res.status(response.OK_STATUS).send(data);
@@ -27,7 +27,7 @@ let appRouter = function (app) {
      * Endpoint for generating bingo numbers for 4 tickets
      * GET user's id: userId
      * Store tickets in MongoDB to validate later
-    */
+     */
     app.get("/generate/:id", function (req, res) {
         let id = req.params.id;
         let data = generate(id);
@@ -39,7 +39,7 @@ let appRouter = function (app) {
      * GET userId and json: board numbers
      * Verify with board data stored in MongoDB
      * If won, mongodb collection needs to be cleared
-    */
+     */
     app.get("/bingo/:id/:board", function (req, res) {
         let userId = req.params.id;
         let boardId = req.params.board;
@@ -49,12 +49,12 @@ let appRouter = function (app) {
     /* 
      * Endpoint to get the latest ball/number and also provide the state of the game
      * Ball numbers to be Global, irrespective of the palyers and game instances
-    */
+     */
     app.get("/draw/:id", function (req, res) {
         /*
-        let lastBallTime = req.params.lastBallTime;
-        let data = mongo.getBall(parseInt(lastBallTime));
-        */
+         *let lastBallTime = req.params.lastBallTime;
+         *let data = mongo.getBall(parseInt(lastBallTime));
+         */
         let userId = req.params.id;
         let lastBall = balls[balls.length - 1];
         if (balls.length === 0) lastBall = 0
@@ -66,10 +66,9 @@ let appRouter = function (app) {
 
     /*
      * For in-memory data integrity test
-    */
+     */
     app.get("/test/:id", function (req, res) {
         let userId = req.params.id;
-        console.log(markedBalls[userId]);
         res.status(response.OK_STATUS).send({ tickets: userData[userId], marked: Array.from(markedBalls[userId]) });
     });
 }

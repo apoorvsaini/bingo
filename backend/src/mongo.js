@@ -1,7 +1,8 @@
 /*
  * Handles all the MongoDB tasks
  * NOTE: Currently not in use
-*/
+ */
+
 const mongoConfig = require('../config/mongodb');
 const mongodb = require('mongodb').MongoClient;
 //const inMemstore = require('data-store');

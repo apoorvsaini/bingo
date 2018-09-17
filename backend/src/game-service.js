@@ -3,7 +3,7 @@
  * marking as start and finish of the game
  * 
  * The numbers will be stored in mongodb for validating the Bingo! claims
-*/
+ */
 
 const serviceConstants = require('../config/game-service');
 const mongo = require('./mongo');
