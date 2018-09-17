@@ -41,6 +41,7 @@ Backend uses *Node.js, with express and Socket.io (to run Ball/number drawing se
     .
     ├── package.json
     └── src
+        ├── config.js   # Set how the game should be played
         ├── actions
         ├── api         # Logic for handling API calls to the backend
         ├── assets
@@ -67,6 +68,14 @@ The Backend server is the Game Master and has two components:
 * Socket Service - Keep on serving the new balls, push to the clients and keep track of them
 
 On the React frontend the user will start getting the new balls/numbers as they come and frontend will automatically mark them in the Tickets. **User can at any time claim Bingo!, which has to be validated by the backend**.
+
+### SELF MARKING vs MANUAL MARKING
+
+In **frontend/src/config.js**, the MANUAL setting is set to **false** by default. If you want users to manually mark the numbers in tickets as the new ball is drawn, change it to **true**
+
+The user in any case has to press **Shout Bingo!** button to validate the claim.
+
+On the backend, the code to rank the player who submits a valid ticket first is already present, but for now I am only allowing to show that the claim was valid or invalid.
 
 ## To Do
 

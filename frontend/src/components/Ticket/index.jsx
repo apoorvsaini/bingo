@@ -17,7 +17,6 @@ class Ticket extends React.Component {
         if (gameConfig.MANUAL && this.props.gameStarted) {
             if (!((this.props.id) in this.props.markedBalls) || !(this.props.markedBalls[this.props.id]).has(grid.ball)) {
                 this.props.markManualTicket({tickedId: this.props.id, ball: grid.ball});
-                alert(grid.ball)
             }
         }
         else {

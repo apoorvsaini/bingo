@@ -45,7 +45,7 @@ class Header extends React.Component {
             });
         }
         else {
-            alert('Not a Bingo!');
+            alert('Liar! Fill up atleast one ticket.');
         }
     }
 
@@ -118,7 +118,7 @@ class Header extends React.Component {
             this.bingoButtton = <button className = 'bingo_button button is-danger' onClick = {(e) => this.claimBingo(e)}>Shout Bingo!</button>
 
             if (this.props.gameResult !== null) {
-                this.bingoButtton = <button className = 'bingo_button button is-danger'>You Got a Bingo! Game will reset in 10 seconds.</button>
+                this.bingoButtton = <button className = 'bingo_button button is-success'>You Got a Bingo! Game will reset in 10 seconds.</button>
             }
         }
         else if (this.props.gameStarted === true && !this.socket.connected) {
