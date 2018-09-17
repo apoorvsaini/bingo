@@ -32,7 +32,7 @@ These settings can be changed from config files in respective project structure.
 
 Frontend uses *React and redux*.
 
-Backend uses *Node.js, with express and Socket.io (to run Ball/number drawing service)*.
+Backend uses *Node.js, with express and Socket.io (to run Ball/number drawing service and broadcast new ball/number to the clients)*.
 
 ### Structure
 
