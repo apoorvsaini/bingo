@@ -39,6 +39,7 @@ io.on('connection', function (socket) {
 
     socket.on('winner', function (userId) {
         winnerList.push(userId);
+        socket.emit('over', {userId: userId, rank: winnerList.length});
         socket.broadcast.emit('over', {userId: userId, rank: winnerList.length});
         console.log('game stopped');
         console.log(winnerList);
@@ -48,7 +49,6 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         userConnected -= 1;
-        console.log('user disconnected ' + userConnected);
         if (userConnected === 0) {
             winnerList = [];
             console.log('game stopped')

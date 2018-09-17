@@ -12,9 +12,13 @@ import { setConnected } from '../../actions/home';
 
 class Header extends React.Component {
     socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
+    startButton = <div></div>;
+    bingoButtton = <div></div>;
+    timer = false;
 
     constructor(props) {
         super(props);
+        //this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
     }
 
     claimBingo(event) {
@@ -41,53 +45,61 @@ class Header extends React.Component {
         this.socket.emit('start', 'start');
 
         this.socket.on('ball', function (data) {
-            _t.props.setNewBall(data);
+            if (_t.props.gameStarted) {
+                _t.props.setNewBall(data);
+            }
         });
 
         this.socket.on('over', function (data) {
             console.log(data);
             if (data.userId === sessionStorage.getItem('userId')) {
-                alert('You finished # '+ data.rank);
+                alert('Your rank ' + data.rank);
+                _t.props.stopGame();
             }
-            _t.props.stopGame();
         });
 
-        this.checkConnection();
         this.props.startGame();
+
+        // If no new balls are received in next 2 seconds, restart
+        this.timer = setInterval(function(){ 
+            console.log('retrying...' + _t.socket.connected);
+            if(_t.props.ballsDrawn.length === 0) {
+                console.log('restart...');
+                _t.startGame();
+            }
+            else {
+                clearInterval(_t.timer);
+                _t.timer = false;
+            }
+        }, 2000);
     }
 
     checkConnection() {
         if(!this.socket.connected) {
             console.log('reconnecting...');
-            this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS)
+            this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
         }
     }
 
-    componentDidUpdate() {
-        this.checkConnection();
-    }
-
     render() {
-        let startButton = <div></div>;
-        let bingoButtton = <div></div>;
-        if (this.props.gameStarted === true) {
-            alert('started');
-            startButton = <div></div>;
-            bingoButtton = <button className = 'bingo_button' onClick = {(e) => this.claimBingo(e)}>Shout Bingo!</button>
-        }    
+        if (this.props.gameStarted === true && this.socket.connected) {
+            this.startButton = <div></div>;
+            this.bingoButtton = <button className = 'bingo_button' onClick = {(e) => this.claimBingo(e)}>Shout Bingo!</button>
+        }
+        else if (this.props.gameStarted === true && !this.socket.connected) {
+            this.startButton = <button className = 'bingo_button' onClick = {(e) => this.startGame(e)}>Wait...</button>;
+            this.bingoButtton = <div></div>;
+        }  
         else {
-            startButton = <button className = 'bingo_button' onClick = {(e) => this.startGame(e)}>Start Game!</button>;
-            bingoButtton = <div></div>;
+            this.startButton = <button className = 'bingo_button' onClick = {(e) => this.startGame(e)}>Start Game!</button>;
+            this.bingoButtton = <div></div>;
         }
 
         return (
             <div className = 'header'>
                 <div className = 'ball_ticker_area'>
-                    <button className = 'bingo_button' onClick = {(e) => this.claimBingo(e)}>
-                        Shout Bingo!
-                    </button>
-                    {startButton}
-                    {bingoButtton}
+                    {this.startButton}
+                    {this.bingoButtton}
                     {this.props.ballsDrawn.map((data, index) => (
                         <span className = {(index === 0) ? 'last_ball' : 'balls'} key = {'ball-' + data.time}> {data.ball} </span>
                     ))}
@@ -113,7 +125,7 @@ function mapStateToProps(props) {
         ticketsData: props.bingo.ticketsData,
         bingoTickets: props.bingo.bingoTickets,
         connected: props.home.connected,
-        gameStarted: props.home.gameStarted,
+        gameStarted: props.bingo.gameStarted,
     });
 }
 

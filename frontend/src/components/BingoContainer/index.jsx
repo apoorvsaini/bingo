@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './style.css';
 import { loadTickets, ticketsLoaded, setTicketsData } from '../../actions/bingo';
+import { resetRestart } from '../../actions/home';
 import ticketGen from '../../api/generate-tickets';
 
 import Ticket from '../Ticket';
@@ -29,6 +30,14 @@ class BingoContainer extends React.Component {
     componentDidMount() {
         this.props.loadTickets();
         this.generateTickets();
+    }
+
+    componentDidUpdate() {
+        if (this.props.restart === true) {
+            this.props.loadTickets();
+            this.generateTickets();
+            this.props.resetRestart();
+        }
     }
 
     render() {
@@ -58,6 +67,7 @@ function mapDispatchToProps(dispatch) {
         loadTickets: () => dispatch(loadTickets()),
         ticketsLoaded: () => dispatch(ticketsLoaded()),
         setTicketsData: (data) => dispatch(setTicketsData(data)),
+        resetRestart: () => dispatch(resetRestart()),
     });
 }
 
@@ -66,6 +76,7 @@ function mapStateToProps(props) {
         tickets: props.bingo.tickets,
         loading: props.bingo.loading,
         ticketsData: props.bingo.ticketsData,
+        restart: props.home.restart
     });
 }
 

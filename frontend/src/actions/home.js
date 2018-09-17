@@ -12,3 +12,7 @@ export const setConnected = (status) => ({
     type: 'SET_CONNECTED',
     payload: status
 });
+
+export const resetRestart = () => ({
+    type: 'RESET_RESTART',
+});

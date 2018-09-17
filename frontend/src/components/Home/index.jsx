@@ -69,7 +69,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(props) {
     return ({
         userId: props.home.userId,
-        showErr: props.home.showErr
+        showErr: props.home.showErr,
+        restart: props.home.restart
     });
 }
 
