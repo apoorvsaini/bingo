@@ -11,9 +11,7 @@ export default async function(ticketId) {
         .then(function (response) {
             console.log("CLAIMING");
             console.log(response);
-            if ('claim' in response.data)
-                resolve(response.data.claim);
-            else resolve(false);
+            resolve(response.data);
         })
         .catch(function (error) {
             reject(null);

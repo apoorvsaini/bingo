@@ -1,14 +1,3 @@
-const initialState = {
-    tickets: [0, 1, 2, 3],
-    loading: false,
-    ticketsData: {},
-    ballsDrawn: [],
-    markedBalls: new Set(),
-    bingoStatus: false,
-    bingoTickets: [],
-    gameStarted: false,
-}
-
 const bingo = (state = 
     {
         tickets: [0, 1, 2, 3],
@@ -19,6 +8,7 @@ const bingo = (state =
         bingoStatus: false,
         bingoTickets: [],
         gameStarted: false,
+        gameResult: null
     }, action) => {
         
     switch (action.type) {
@@ -38,7 +28,21 @@ const bingo = (state =
         }
 
         case 'STOP_GAME': {
-            return initialState;
+            return {
+                tickets: [0, 1, 2, 3],
+                loading: false,
+                ticketsData: {},
+                ballsDrawn: [],
+                markedBalls: new Set(),
+                bingoStatus: false,
+                bingoTickets: [],
+                gameStarted: false,
+                gameResult: null,
+            };
+        }
+
+        case 'SET_GAME_RESULT': {
+            return { ...state, gameResult: action.payload };
         }
 
         case 'SET_TICKETS_DATA': {

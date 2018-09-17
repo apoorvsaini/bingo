@@ -31,3 +31,8 @@ export const setBingoFalse = () => ({
 export const setBingoTrue = () => ({
     type: 'SET_BINGO_TRUE',
 });
+
+export const setGameResult = (data) => ({
+    type: 'SET_GAME_RESULT',
+    payload: data
+});

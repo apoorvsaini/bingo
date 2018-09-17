@@ -13,6 +13,7 @@
     background: #FFF;
     width: 50%;
     margin-bottom: 100px;
+    margin: 0px auto !important;
 }
 
 .ticket_area:after {
@@ -24,5 +25,6 @@
 @media only screen and (max-width: 800px) {
     .bingo_container {
         width: 100%;
+        padding-left: 10px;
     }
 }

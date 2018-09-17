@@ -4,10 +4,10 @@ const routes = require('./routes/routes');
 const connection = require('./config/server');
 const serviceConstants = require('./config/game-service');
 const gameService = require('./src/game-service');
+let winnerList = require('../store/winners');
 
 let app = express();
 let userConnected = 0;
-let winnerList = [];
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,12 +38,14 @@ io.on('connection', function (socket) {
     });
 
     socket.on('end', function () {
+        winnerList = new Array();
         socket.disconnect();
     });
 
     socket.on('winner', function (userId) {
         if (winnerList.length === 0)
             winnerList.push(userId);
+            
         //socket.emit('over', {userId: userId, rank: winnerList.length});
         socket.broadcast.emit('over', {userId: userId, rank: winnerList.length});
         console.log('game stopped');

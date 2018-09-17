@@ -20,22 +20,26 @@
 .balls {
     float: right;
     margin-left: 10px;
-    font-size: 2em;
+    font-size: 1.1em;
     border: 1px solid #000000;
     border-radius: 10px;
     padding: 5px;
-    
+    background: #000000;
+    color: #ffffff;
+    width: 50px;
 }
 
 .last_ball {
     float: right;
-    color: aqua;
-    font-size: 2em;
+    color: #ffffff;
+    font-size: 1.1em;
     margin-left: 20px;
     margin-right: 10px;
-    border: 1px solid #000000;
+    border: 1px solid #28aaf4;
+    background: #28aaf4;
     border-radius: 10px;
     padding: 5px;
+    width: 50px;
 }
 
 .bingo_button {
@@ -47,5 +51,7 @@
         width: 100%;
         padding-top: 5px;
         margin: 0px auto !important;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

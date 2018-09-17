@@ -7,7 +7,7 @@ import validateBingo from '../../api/claim-bingo';
 
 import './style.css';
 import '../../assets/bulma.min.css';
-import { setNewBall, stopGame, startGame } from '../../actions/bingo';
+import { setNewBall, stopGame, startGame, setGameResult } from '../../actions/bingo';
 import { setConnected } from '../../actions/home';
 
 
@@ -26,16 +26,24 @@ class Header extends React.Component {
         let _t = this;
         if (this.props.bingoTickets.length > 0) {
             validateBingo(this.props.bingoTickets[0]).then(function(result) {
-                if (result) {
-                    _t.socket.emit('winner', sessionStorage.getItem('userId'))
+                if (result.claim) {
+                    if (result.won === true) {
+                        _t.props.setGameResult('won');
+                    }
+                    else {
+                        _t.props.setGameResult('lost');
+                    }
+                    
+                    //_t.props.stopGame();
+                    setTimeout(function() { window.location.reload(); }, 10000);
                 }
                 else {
-                    alert('Invalid');
+                    alert('Not a Bingo!');
                 }
             });
         }
         else {
-            alert('LIAR!');
+            alert('Not a Bingo!');
         }
     }
 
@@ -52,18 +60,20 @@ class Header extends React.Component {
             }
         });
 
+        /*
         this.socket.on('over', function (data) {
             console.log(data);
             if (data.userId === sessionStorage.getItem('userId')) {
-                alert('Your won!');
+                //alert('Your won!');
+                _t.props.setGameResult('won');
             }
             else {
-                alert('Your Lost!');
+                //alert('Your Lost!');
+                _t.props.setGameResult('lost');
             }
             _t.props.stopGame();
-            _t.socket.emit('stop', 'stop');
-            window.location.reload();
-        });
+            setTimeout(function() { window.location.reload(); }, 5000);
+        }); */
 
         this.props.startGame();
 
@@ -96,6 +106,10 @@ class Header extends React.Component {
         if (this.props.gameStarted === true && this.socket.connected) {
             this.startButton = <div></div>;
             this.bingoButtton = <button className = 'bingo_button button is-danger' onClick = {(e) => this.claimBingo(e)}>Shout Bingo!</button>
+
+            if (this.props.gameResult !== null) {
+                this.bingoButtton = <button className = 'bingo_button button is-danger'>You Got a Bingo! Game will reset in 10 seconds.</button>
+            }
         }
         else if (this.props.gameStarted === true && !this.socket.connected) {
             this.startButton = <button className = 'bingo_button button is-warning'>Wait...</button>;
@@ -111,9 +125,9 @@ class Header extends React.Component {
                 <div className = 'ball_ticker_area'>
                     {this.startButton}
                     {this.bingoButtton}
-                    {this.props.ballsDrawn.map((data, index) => (
+                    {(this.props.gameResult === null) ? this.props.ballsDrawn.map((data, index) => (
                         <span className = {(index === 0) ? 'last_ball' : 'balls'} key = {'ball-' + data.time}> {data.ball} </span>
-                    ))}
+                    )) : <span></span>}
                 </div>
             </div>
         );
@@ -127,6 +141,7 @@ function mapDispatchToProps(dispatch) {
         setConnected: (status) => dispatch(setConnected(status)),
         startGame: () => dispatch(startGame()),
         stopGame: () => dispatch(stopGame()),
+        setGameResult: (data) => dispatch(setGameResult()),
     });
 }
 
@@ -137,6 +152,7 @@ function mapStateToProps(props) {
         bingoTickets: props.bingo.bingoTickets,
         connected: props.home.connected,
         gameStarted: props.bingo.gameStarted,
+        gameResult: props.bingo.gameResult
     });
 }
 
