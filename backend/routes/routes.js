@@ -16,9 +16,7 @@ let appRouter = function (app) {
      * Endpoint for generating userId
     */
     app.get("/auth/", function (req, res) {
-        let data = ({
-            user_id: auth()
-        });
+        let data = ({ user_id: auth() });
         res.status(response.OK_STATUS).send(data);
     });
 

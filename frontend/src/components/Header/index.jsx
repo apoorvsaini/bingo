@@ -11,22 +11,22 @@ import { setConnected } from '../../actions/home';
 
 
 class Header extends React.Component {
-    socket;
+    socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
 
     constructor(props) {
         super(props);
-
-        this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
-        this.socket.emit('msg','yo');
-        this.socket.on('reconnect', function (data) {
-            console.log('re-connected');
-        });
     }
 
     claimBingo(event) {
+        let _t = this;
         if (this.props.bingoTickets.length > 0) {
             claimBingo(this.props.bingoTickets[0]).then(function(result) {
-                alert(result);
+                if (result) {
+                    _t.socket.emit('winner', sessionStorage.getItem('userId'))
+                }
+                else {
+                    alert('Invalid');
+                }
             });
         }
         else {
@@ -34,22 +34,37 @@ class Header extends React.Component {
         }
     }
 
-    checkConnection() {
-        if(!this.socket.connected) {
-            console.log('reconnecting...');
-            this.socket = io.connect(api.API_URL);
-        }
-    }
-
-    componentDidMount() {
+    startGame(event) {
         let _t = this;
-        this.socket = io.connect(api.API_URL);
+        this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
+
+        this.socket.emit('start', 'start');
 
         this.socket.on('ball', function (data) {
             _t.props.setNewBall(data);
         });
 
+        this.socket.on('over', function (data) {
+            if (data.indexOf(sessionStorage.getItem('userId') === -1)) {
+                alert('Game over');
+            }
+            else {
+                alert('Your rank is '+ (data.indexOf(sessionStorage.getItem('userId') + 1)));
+            }
+        });
+
         this.checkConnection();
+    }
+
+    checkConnection() {
+        if(!this.socket.connected) {
+            console.log('reconnecting...');
+            this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS)
+        }
+    }
+
+    componentDidMount() {
+        
     }
 
     componentDidUpdate() {
@@ -62,6 +77,10 @@ class Header extends React.Component {
                 <div className = 'ball_ticker_area'>
                     <button className = 'bingo_button' onClick = {(e) => this.claimBingo(e)}>
                         Shout Bingo!
+                    </button>
+
+                    <button className = 'bingo_button' onClick = {(e) => this.startGame(e)}>
+                        start game!
                     </button>
                     {this.props.ballsDrawn.map((data, index) => (
                         <span className = {(index === 0) ? 'last_ball' : 'balls'} key = {'ball-' + data.time}> {data.ball} </span>
