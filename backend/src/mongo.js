@@ -5,9 +5,9 @@
 
 const mongoConfig = require('../config/mongodb');
 const mongodb = require('mongodb').MongoClient;
-//const inMemstore = require('data-store');
 
 module.exports = {
+    
     // Save drawn number in mongodb
     setBall: function(ballObj) {
         mongodb.connect(mongoConfig.MONGO_URI, { useNewUrlParser: true }, function(err, db) {

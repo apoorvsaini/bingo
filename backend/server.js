@@ -7,6 +7,7 @@ const gameService = require('./src/game-service');
 let winnerList = require('./store/winners');
 
 let app = express();
+
 let userConnected = 0;
 
 app.use(bodyParser.json());
@@ -26,8 +27,7 @@ let timerId = false;
 
 /*
  * Ball draw Service implementation
- * Start game service
- * To scale, it should become a separate service
+ * To scale, run it on a different machine
  */  
 
 io.on('connection', function (socket) {

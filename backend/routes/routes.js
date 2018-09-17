@@ -9,7 +9,9 @@ const markedBalls = require('../store/user-balls');
 
 let appRouter = function (app) {
     
-    // Default endpoint
+    /* 
+     * Default endpoint
+     */
     app.get("/", function(req, res) {
         res.status(response.OK_STATUS).send("Bingo Time!");
     });
@@ -51,10 +53,6 @@ let appRouter = function (app) {
      * Ball numbers to be Global, irrespective of the palyers and game instances
      */
     app.get("/draw/:id", function (req, res) {
-        /*
-         *let lastBallTime = req.params.lastBallTime;
-         *let data = mongo.getBall(parseInt(lastBallTime));
-         */
         let userId = req.params.id;
         let lastBall = balls[balls.length - 1];
         if (balls.length === 0) lastBall = 0
