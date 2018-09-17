@@ -24,6 +24,16 @@ export const setNewBall = ball => ({
     payload: ball
 });
 
+export const markTicket = ball => ({
+    type: 'MARK_TICKET',
+    payload: ball
+});
+
+export const markManualTicket = data => ({
+    type: 'MARK_MANUAL_TICKET',
+    payload: data
+});
+
 export const setBingoFalse = () => ({
     type: 'SET_BINGO_FALSE',
 });

@@ -57,7 +57,30 @@ const bingo = (state =
             return { ...state, bingoStatus: true };
         }
 
-        case 'NEW_NUMBER_LOADED': {
+        case 'MARK_MANUAL_TICKET': {
+            let ticketId = action.payload.tickedId;
+            let ball = action.payload.ball;
+            let newMarkers = state.markedBalls;
+            let newBingoStatus = state.bingoStatus;
+            let newBingoTickets = state.bingoTickets;
+
+            let tickets = state.ticketsData[ticketId];
+            if (tickets.indexOf(ball) !== -1) {
+                if (!(ticketId in newMarkers))
+                    newMarkers[ticketId] = new Set();
+                
+                newMarkers[ticketId].add(ball);
+
+                if (newMarkers[ticketId].size === 25) {
+                    newBingoStatus = true;
+                    newBingoTickets.push(ticketId);
+                }
+            }
+
+            return { ...state, bingoStatus: newBingoStatus, bingoTickets: newBingoTickets, markedBalls: Object.assign({}, newMarkers), };
+        }
+
+        case 'MARK_TICKET': {
             let newMarkers = state.markedBalls;
             let newBingoStatus = state.bingoStatus;
             let newBingoTickets = state.bingoTickets;
@@ -80,8 +103,13 @@ const bingo = (state =
                 }
             }
 
+            return { ...state, bingoStatus: newBingoStatus, bingoTickets: newBingoTickets, markedBalls: Object.assign({}, newMarkers), };
+        }
+
+        case 'NEW_NUMBER_LOADED': {
+
             if (!(action.payload in state.ballsDrawn)) {
-                return { ...state, markedBalls: Object.assign({}, newMarkers), ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6), bingoStatus: newBingoStatus, bingoTickets: newBingoTickets };
+                return { ...state, ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6)};
             }
         }
 

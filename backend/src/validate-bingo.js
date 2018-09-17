@@ -21,7 +21,6 @@ module.exports = function(userId, boardId) {
     if (result) {
         // Clear out previous data
         userBalls[userId] = new Set();
-        userData[userId] = [];
     }
 
     // Get rankings

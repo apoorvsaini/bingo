@@ -40,7 +40,7 @@ Backend uses *Node.js, with express and Socket.io (to run Ball/number drawing se
 
     .
     ├── package.json
-    ├── src
+    └── src
         ├── actions
         ├── api         # Logic for handling API calls to the backend
         ├── assets

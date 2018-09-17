@@ -5,10 +5,11 @@ import io from 'socket.io-client';
 import api from '../../api/api-config';
 import validateBingo from '../../api/claim-bingo';
 import drawNewBall from '../../api/draw-ball';
-
+import gameConfig from '../../config';
 import './style.css';
 import '../../assets/bulma.min.css';
-import { setNewBall, stopGame, startGame, setGameResult } from '../../actions/bingo';
+
+import { setNewBall, stopGame, startGame, setGameResult, markTicket } from '../../actions/bingo';
 import { setConnected } from '../../actions/home';
 
 
@@ -59,6 +60,10 @@ class Header extends React.Component {
         this.socket.on('ball', function (data) {
             if (_t.props.gameStarted) {
                 _t.props.setNewBall(data);
+                
+                if(!gameConfig.MANUAL) {
+                    _t.props.markTicket(data);
+                }
             }
         });
 
@@ -143,6 +148,7 @@ class Header extends React.Component {
 function mapDispatchToProps(dispatch) {
     return ({
         setNewBall: (data) => dispatch(setNewBall(data)),
+        markTicket: (data) => dispatch(markTicket(data)),
         setConnected: (status) => dispatch(setConnected(status)),
         startGame: () => dispatch(startGame()),
         stopGame: () => dispatch(stopGame()),

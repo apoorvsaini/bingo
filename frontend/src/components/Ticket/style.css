@@ -8,6 +8,7 @@
     width: 18%;
     border: 1px solid #000000;
     text-align: center;
+    cursor: pointer;
 }
 
 .ticket_grid:after {
