@@ -39,8 +39,9 @@ io.on('connection', function (socket) {
 
     socket.on('winner', function (userId) {
         winnerList.push(userId);
-        socket.broadcast.emit('over', winnerList[0]);
+        socket.broadcast.emit('over', {userId: userId, rank: winnerList.length});
         console.log('game stopped');
+        console.log(winnerList);
         clearInterval(timerId);
         timerId = false;
     });

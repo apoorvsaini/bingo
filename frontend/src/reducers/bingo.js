@@ -7,6 +7,7 @@ const bingo = (state =
         markedBalls: new Set(),
         bingoStatus: false,
         bingoTickets: [],
+        gameStarted: false,
     }, action) => {
         
     switch (action.type) {
@@ -16,6 +17,22 @@ const bingo = (state =
 
         case 'TICKETS_LOADED': {
             return { ...state, loading: false };
+        }
+
+        case 'START_GAME': {
+            return { ...state, gameStarted: true };
+        }
+
+        case 'STOP_GAME': {
+            return { ...state, 
+                loading: false,
+                ticketsData: {},
+                ballsDrawn: [],
+                markedBalls: new Set(),
+                bingoStatus: false,
+                bingoTickets: [],
+                gameStarted: false, 
+            };
         }
 
         case 'SET_TICKETS_DATA': {

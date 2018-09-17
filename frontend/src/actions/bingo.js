@@ -11,6 +11,14 @@ export const setTicketsData = data => ({
     payload: data
 });
 
+export const startGame = () => ({
+    type: 'START_GAME',
+});
+
+export const stopGame = () => ({
+    type: 'STOP_GAME',
+});
+
 export const setNewBall = ball => ({
     type: 'NEW_NUMBER_LOADED',
     payload: ball

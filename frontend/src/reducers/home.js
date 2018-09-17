@@ -10,6 +10,13 @@ const home = (state =
             return { ...state, userId: action.payload };
         }
 
+        case 'STOP_GAME': {
+            return { ...state, 
+                showErr: false,
+                connected: false, 
+            };
+        }
+
         case 'SET_ERROR': {
             return { ...state, showErr: action.payload };
         }
