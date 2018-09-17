@@ -1,6 +1,7 @@
 /*
  * Get the user id from the server and store in sessionStorage
-*/
+ */
+
 import api from './api-config';
 import axios from 'axios';
 

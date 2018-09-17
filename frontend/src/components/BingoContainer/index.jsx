@@ -13,7 +13,6 @@ class BingoContainer extends React.Component {
         super(props);
     }
 
-    // Make API call to generate the tickets data
     generateTickets() {
         let _t = this;
 

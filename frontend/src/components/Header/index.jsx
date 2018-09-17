@@ -21,7 +21,6 @@ class Header extends React.Component {
 
     constructor(props) {
         super(props);
-        //this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
     }
 
     claimBingo(event) {
@@ -67,39 +66,8 @@ class Header extends React.Component {
             }
         });
 
-        /*
-        this.socket.on('over', function (data) {
-            console.log(data);
-            if (data.userId === sessionStorage.getItem('userId')) {
-                //alert('Your won!');
-                _t.props.setGameResult('won');
-            }
-            else {
-                //alert('Your Lost!');
-                _t.props.setGameResult('lost');
-            }
-            _t.props.stopGame();
-            setTimeout(function() { window.location.reload(); }, 5000);
-        }); */
-
         this.props.startGame();
         this.checkConnection();
-
-        // If no new balls are received in next 2 seconds, restart
-        /*
-        if (!this.timer) {
-            if(!this.socket.connected) {
-                this.timer = setInterval(function(){ 
-                    if(_t.props.ballsDrawn.length === 0) {
-                        _t.startGame();
-                    }
-                    else {
-                        clearInterval(_t.timer);
-                        _t.timer = false;
-                    }
-                }, 2000);
-            }
-        }*/
     }
 
     checkConnection() {

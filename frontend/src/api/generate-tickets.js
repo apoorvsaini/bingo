@@ -1,6 +1,7 @@
 /*
  * Get the tickets for the user
-*/
+ */
+
 import api from './api-config';
 import axios from 'axios';
 

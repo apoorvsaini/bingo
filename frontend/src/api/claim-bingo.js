@@ -1,6 +1,6 @@
 /*
  * Asks server to validate the Bingo claim by user
-*/
+ */
 
 import api from './api-config';
 import axios from 'axios';
