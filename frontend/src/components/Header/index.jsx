@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 
 import api from '../../api/api-config';
 import validateBingo from '../../api/claim-bingo';
+import drawNewBall from '../../api/draw-ball';
 
 import './style.css';
 import '../../assets/bulma.min.css';
@@ -52,6 +53,8 @@ class Header extends React.Component {
         this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
 
         this.socket.emit('start', 'start');
+
+        drawNewBall();
 
         this.socket.on('ball', function (data) {
             if (_t.props.gameStarted) {

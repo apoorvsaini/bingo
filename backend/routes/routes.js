@@ -5,6 +5,7 @@ const mongo = require('../src/mongo');
 const validate = require('../src/validate-bingo');
 const userData = require('../store/tickets');
 const balls = require('../store/balls');
+const markedBalls = require('../store/user-balls');
 
 let appRouter = function (app) {
     
@@ -49,15 +50,27 @@ let appRouter = function (app) {
      * Endpoint to get the latest ball/number and also provide the state of the game
      * Ball numbers to be Global, irrespective of the palyers and game instances
     */
-    app.get("/draw", function (req, res) {
+    app.get("/draw/:id", function (req, res) {
         /*
         let lastBallTime = req.params.lastBallTime;
         let data = mongo.getBall(parseInt(lastBallTime));
         */
+        let userId = req.params.id;
         let lastBall = balls[balls.length - 1];
         if (balls.length === 0) lastBall = 0
 
+        markedBalls[userId] = new Set();
+
         res.status(response.OK_STATUS).send({ last_ball: lastBall });
+    });
+
+    /*
+     * For in-memory data integrity test
+    */
+    app.get("/test/:id", function (req, res) {
+        let userId = req.params.id;
+        console.log(markedBalls[userId]);
+        res.status(response.OK_STATUS).send({ tickets: userData[userId], marked: Array.from(markedBalls[userId]) });
     });
 }
 

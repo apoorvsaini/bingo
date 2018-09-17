@@ -9,6 +9,7 @@ const serviceConstants = require('../config/game-service');
 const mongo = require('./mongo');
 const shuffle = require('../utils/shuffle');
 let balls = require('../store/balls');
+let userBalls = require('../store/user-balls');
 
 let counter = 0;
 let allBalls = [];
@@ -20,6 +21,13 @@ for (let i = 1; i <= serviceConstants.MAX_BALLS; i++)
     allBalls.push(i);
 
 shuffle(allBalls);
+
+function markTickets(num) {
+    for (let i in userBalls) {
+        let ticks = userBalls[i];
+        ticks.add(num);
+    }
+}
 
 module.exports = function(io) {
     if (counter === serviceConstants.MAX_BALLS - 1) {
@@ -35,6 +43,6 @@ module.exports = function(io) {
         counter += 1;
 
         // Mark numbers on the user's tickets in-memory
-        
+        markTickets(newNumber);
     }
 }

@@ -5,6 +5,7 @@
 const gameConfig = require('../config/game-service');
 const userData = require('../store/tickets');
 const shuffle = require('../utils/shuffle');
+let userBalls = require('../store/user-balls');
 
 module.exports = function(id) {
     if (userData.hasOwnProperty(id)) {
