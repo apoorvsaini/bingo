@@ -39,6 +39,7 @@ class Header extends React.Component {
     }
 
     startGame(event) {
+        alert(sessionStorage.getItem('userId'));
         let _t = this;
         this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
 
@@ -46,6 +47,7 @@ class Header extends React.Component {
 
         this.socket.on('ball', function (data) {
             if (_t.props.gameStarted) {
+                console.log(_t.props.ballsDrawn.length);
                 _t.props.setNewBall(data);
             }
         });
@@ -53,25 +55,34 @@ class Header extends React.Component {
         this.socket.on('over', function (data) {
             console.log(data);
             if (data.userId === sessionStorage.getItem('userId')) {
-                alert('Your rank ' + data.rank);
-                _t.props.stopGame();
+                alert('Your won!');
             }
+            else {
+                alert('Your Lost!');
+            }
+            _t.props.stopGame();
+            _t.socket.emit('stop', 'stop');
+            window.location.reload();
         });
 
         this.props.startGame();
 
         // If no new balls are received in next 2 seconds, restart
-        this.timer = setInterval(function(){ 
-            console.log('retrying...' + _t.socket.connected);
-            if(_t.props.ballsDrawn.length === 0) {
-                console.log('restart...');
-                _t.startGame();
+        if (!this.timer) {
+            if(!this.socket.connected) {
+                this.timer = setInterval(function(){ 
+                    console.log('retrying...' + _t.socket.connected);
+                    if(_t.props.ballsDrawn.length === 0) {
+                        console.log('restart...');
+                        _t.startGame();
+                    }
+                    else {
+                        clearInterval(_t.timer);
+                        _t.timer = false;
+                    }
+                }, 2000);
             }
-            else {
-                clearInterval(_t.timer);
-                _t.timer = false;
-            }
-        }, 2000);
+        }
     }
 
     checkConnection() {

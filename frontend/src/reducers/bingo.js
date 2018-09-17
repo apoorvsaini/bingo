@@ -1,3 +1,14 @@
+const initialState = {
+    tickets: [0, 1, 2, 3],
+    loading: false,
+    ticketsData: {},
+    ballsDrawn: [],
+    markedBalls: new Set(),
+    bingoStatus: false,
+    bingoTickets: [],
+    gameStarted: false,
+}
+
 const bingo = (state = 
     {
         tickets: [0, 1, 2, 3],
@@ -20,19 +31,14 @@ const bingo = (state =
         }
 
         case 'START_GAME': {
-            return { ...state, gameStarted: true };
+            return { ...state, 
+                gameStarted: true,
+                ballsDrawn: new Array()
+            };
         }
 
         case 'STOP_GAME': {
-            return { ...state, 
-                loading: false,
-                ticketsData: {},
-                ballsDrawn: [],
-                markedBalls: new Set(),
-                bingoStatus: false,
-                bingoTickets: [],
-                gameStarted: false, 
-            };
+            return initialState;
         }
 
         case 'SET_TICKETS_DATA': {
@@ -70,7 +76,9 @@ const bingo = (state =
                 }
             }
 
-            return { ...state, markedBalls: Object.assign({}, newMarkers), ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6), bingoStatus: newBingoStatus, bingoTickets: newBingoTickets };
+            if (!(action.payload in state.ballsDrawn)) {
+                return { ...state, markedBalls: Object.assign({}, newMarkers), ballsDrawn: ([action.payload, ...state.ballsDrawn]).slice(0, 6), bingoStatus: newBingoStatus, bingoTickets: newBingoTickets };
+            }
         }
 
         default: return state;

@@ -37,12 +37,17 @@ io.on('connection', function (socket) {
         }
     });
 
+    socket.on('end', function () {
+        socket.disconnect();
+    });
+
     socket.on('winner', function (userId) {
-        winnerList.push(userId);
-        socket.emit('over', {userId: userId, rank: winnerList.length});
+        if (winnerList.length === 0)
+            winnerList.push(userId);
+        //socket.emit('over', {userId: userId, rank: winnerList.length});
         socket.broadcast.emit('over', {userId: userId, rank: winnerList.length});
         console.log('game stopped');
-        console.log(winnerList);
+        winnerList = [];
         clearInterval(timerId);
         timerId = false;
     });
