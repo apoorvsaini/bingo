@@ -45,7 +45,7 @@ Backend uses *Node.js, with express and Socket.io (to run Ball/number drawing se
         ├── api         # Logic for handling API calls to the backend
         ├── assets
         ├── components
-        └──  reducers
+        └── reducers
 
 #### Backend
 
