@@ -25,7 +25,6 @@ module.exports = function(io) {
     if (counter === serviceConstants.MAX_BALLS - 1) {
         shuffle(allBalls);
         counter = 0;
-        console.log('ran out of numbers');
     }
     else {
         let newNumber = allBalls[counter];

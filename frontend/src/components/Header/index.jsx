@@ -55,7 +55,6 @@ class Header extends React.Component {
 
         this.socket.on('ball', function (data) {
             if (_t.props.gameStarted) {
-                console.log(_t.props.ballsDrawn.length);
                 _t.props.setNewBall(data);
             }
         });
@@ -81,9 +80,7 @@ class Header extends React.Component {
         if (!this.timer) {
             if(!this.socket.connected) {
                 this.timer = setInterval(function(){ 
-                    console.log('retrying...' + _t.socket.connected);
                     if(_t.props.ballsDrawn.length === 0) {
-                        console.log('restart...');
                         _t.startGame();
                     }
                     else {
@@ -97,7 +94,6 @@ class Header extends React.Component {
 
     checkConnection() {
         if(!this.socket.connected) {
-            console.log('reconnecting...');
             this.socket = io.connect(api.API_URL, api.SOCKET_OPTIONS);
         }
     }

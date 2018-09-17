@@ -32,7 +32,6 @@ io.on('connection', function (socket) {
 
     socket.on('start', function () {
         if (userConnected >= 1 && !timerId) {
-            console.log('game started');
             timerId = setInterval(() => gameService(socket), serviceConstants.TIME_INTERVAL);
         }
     });
@@ -45,10 +44,9 @@ io.on('connection', function (socket) {
     socket.on('winner', function (userId) {
         if (winnerList.length === 0)
             winnerList.push(userId);
-            
+
         //socket.emit('over', {userId: userId, rank: winnerList.length});
         socket.broadcast.emit('over', {userId: userId, rank: winnerList.length});
-        console.log('game stopped');
         winnerList = [];
         clearInterval(timerId);
         timerId = false;
@@ -58,7 +56,6 @@ io.on('connection', function (socket) {
         userConnected -= 1;
         if (userConnected === 0) {
             winnerList = [];
-            console.log('game stopped')
             clearInterval(timerId);
             timerId = false;
         }
